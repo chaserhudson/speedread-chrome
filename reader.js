@@ -46,12 +46,33 @@ function wordDelay(token, baseMs) {
   return baseMs * mult;
 }
 
+// ── Sentence boundaries ──
+// For each word index, store which sentence it belongs to.
+// sentences[i] = { start, end } — word indices for the sentence containing word i.
+let sentenceRanges = []; // array parallel to words: sentenceRanges[i] = {start, end}
+
+function buildSentenceRanges(tokens) {
+  const ranges = [];
+  let sentStart = 0;
+  for (let i = 0; i < tokens.length; i++) {
+    if (tokens[i].trailingPunct || i === tokens.length - 1) {
+      const range = { start: sentStart, end: i };
+      for (let j = sentStart; j <= i; j++) {
+        ranges[j] = range;
+      }
+      sentStart = i + 1;
+    }
+  }
+  return ranges;
+}
+
 // ── State ──
 let words = [];
 let currentIndex = 0;
 let isPlaying = false;
 let wpm = 300;
 let playbackTimer = null;
+let wasPlayingBeforeOverlay = false;
 
 // ── DOM refs ──
 const prefixEl = document.getElementById("prefix");
@@ -67,6 +88,8 @@ const progressBar = document.getElementById("progress-bar");
 const progressBarContainer = document.getElementById("progress-bar-container");
 const progressText = document.getElementById("progress-text");
 const wordContainer = document.getElementById("word-container");
+const sentenceOverlay = document.getElementById("sentence-overlay");
+const wordDisplay = document.getElementById("word-display");
 
 // ── Display a word ──
 function displayWord(token) {
@@ -196,6 +219,56 @@ document.querySelectorAll(".preset").forEach((btn) => {
   });
 });
 
+// ── Sentence overlay ──
+function showSentence() {
+  // The word currently displayed is currentIndex - 1 if playing (tick increments after display),
+  // or currentIndex if paused.
+  const wordIdx = isPlaying ? Math.max(0, currentIndex - 1) : currentIndex;
+  if (wordIdx >= words.length || sentenceRanges.length === 0) return;
+
+  wasPlayingBeforeOverlay = isPlaying;
+  if (isPlaying) pause();
+
+  const range = sentenceRanges[wordIdx];
+  if (!range) return;
+
+  // Build sentence HTML with the current word highlighted
+  let html = "";
+  for (let i = range.start; i <= range.end; i++) {
+    if (i > range.start) html += " ";
+    if (i === wordIdx) {
+      html += `<span class="current-word">${words[i].text}</span>`;
+    } else {
+      html += words[i].text;
+    }
+  }
+
+  sentenceOverlay.innerHTML = html;
+  sentenceOverlay.style.display = "block";
+}
+
+function hideSentence() {
+  if (sentenceOverlay.style.display === "none") return;
+  sentenceOverlay.style.display = "none";
+  if (wasPlayingBeforeOverlay) play();
+}
+
+wordDisplay.addEventListener("mousedown", (e) => {
+  // Don't trigger on the overlay itself click (that's for dismissing)
+  if (e.target === sentenceOverlay || sentenceOverlay.contains(e.target)) return;
+  e.preventDefault();
+  showSentence();
+});
+
+wordDisplay.addEventListener("mouseup", (e) => {
+  if (e.target === sentenceOverlay || sentenceOverlay.contains(e.target)) return;
+  hideSentence();
+});
+
+sentenceOverlay.addEventListener("click", () => {
+  hideSentence();
+});
+
 // Scrub progress bar
 progressBarContainer.addEventListener("click", (e) => {
   const rect = progressBarContainer.getBoundingClientRect();
@@ -242,6 +315,7 @@ chrome.storage.local.get("speedReadText", (data) => {
   }
 
   words = parseText(text);
+  sentenceRanges = buildSentenceRanges(words);
   if (words.length > 0) {
     displayWord(words[0]);
     updateProgress();

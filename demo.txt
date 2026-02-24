@@ -1,0 +1,21 @@
+Welcome to SpeedRead. This is a demo text that will help you get familiar with RSVP speed reading.
+
+RSVP stands for Rapid Serial Visual Presentation. It is a technique where words are displayed one at a time in a fixed position on screen. Instead of your eyes scanning across lines of text, the words come to you. This eliminates the slowest part of reading: eye movement.
+
+When you read traditionally, your eyes make small jumps called saccades. Each saccade takes about 20 to 30 milliseconds. Between saccades, your eyes briefly fixate on a word for 200 to 250 milliseconds. These fixations are where actual comprehension happens. The rest is wasted motion.
+
+RSVP removes saccades entirely. Every word appears at the same spot. Your eyes stay still. Only the words change.
+
+The red letter you see highlighted on each word is called the Optimal Recognition Point, or ORP. Research shows that your brain does not process a word starting from the first letter. Instead, there is a specific character position where recognition happens fastest. For short words, it is near the beginning. For longer words, it shifts slightly to the right.
+
+By aligning each word so its ORP lands at the same fixed point on screen, your brain can recognize words faster with less effort. This is why the red letter always stays in the center while the rest of the word shifts around it.
+
+Adaptive timing is another key feature. Not all words take the same amount of time to process. Short common words like "the" or "is" can flash by quickly. Longer words need more time. Words followed by punctuation like periods or commas get an extra pause. This mimics the natural rhythm of reading and gives your brain time to process sentence boundaries.
+
+Most people read at about 200 to 250 words per minute with traditional reading. With RSVP, many readers can comfortably reach 400 to 500 words per minute while maintaining good comprehension. Some experienced users read at 700 or more.
+
+Start at a comfortable speed. Try 250 or 300 words per minute. Once that feels easy, bump it up by 50. Push yourself slightly beyond comfort, then let your brain adapt. Within a few sessions, you will notice your comfortable speed increasing.
+
+Click and hold on the word display area at any time to see the full sentence for context. Release to resume reading. Use the arrow keys to skip forward or back, and the up and down arrows to adjust speed on the fly.
+
+You are now speed reading. Congratulations.
