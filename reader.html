@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SpeedRead</title>
+  <link rel="stylesheet" href="reader.css">
+</head>
+<body>
+  <div id="app">
+    <div id="word-display">
+      <div id="anchor-line"></div>
+      <div id="word-container">
+        <span id="prefix"></span><span id="anchor"></span><span id="suffix"></span>
+      </div>
+    </div>
+
+    <div id="progress-bar-container">
+      <div id="progress-bar"></div>
+    </div>
+
+    <div id="controls">
+      <div id="controls-top">
+        <button id="btn-back10" title="Back 10 words">⏪</button>
+        <button id="btn-play" title="Play/Pause (Space)">▶</button>
+        <button id="btn-fwd10" title="Forward 10 words">⏩</button>
+        <button id="btn-reset" title="Reset">↺</button>
+      </div>
+      <div id="speed-row">
+        <span id="wpm-label">300 WPM</span>
+        <input type="range" id="speed-slider" min="100" max="1000" step="25" value="300">
+        <div id="speed-presets">
+          <button class="preset" data-wpm="200">200</button>
+          <button class="preset" data-wpm="300">300</button>
+          <button class="preset" data-wpm="500">500</button>
+        </div>
+      </div>
+      <div id="progress-text"></div>
+    </div>
+  </div>
+  <script src="reader.js"></script>
+</body>
+</html>
